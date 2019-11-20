@@ -1,7 +1,7 @@
 
 from flask import Flask, request, redirect
 from twilio.twiml.messaging_response import MessagingResponse
-from test import getResult
+from getClass import getClass
 from findRate import findRating
 
 app = Flask(__name__)
@@ -11,13 +11,14 @@ def incoming_sms():
 
     body = request.values.get('Body', None)
     resp = MessagingResponse()
-    result = getResult(body)
+    result = getClass(body)
+
     
     sectionsOutput = f'There are {len(result)} sections for {body}.\n'
-    teacherList = []
+    teacherSet = set()
     for section in result:
-        teacherList.append(section.teacher)
-        sectionsOutput + f"Section Name: {section.sectionName}, Teacher Name: {section.teacher}, Time: {section.time} \n"
+        teacherSet.add(section.teacher)
+        sectionsOutput += f"Section Name: {section.sectionName}, Teacher Name: {section.teacher}, Time: {section.time} \n"
 
     # ratings = findRating(result)
 

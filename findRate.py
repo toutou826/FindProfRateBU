@@ -31,4 +31,3 @@ def findRating(aTeacher):
     return link
 
 
-print(findRating("Perry Donham"))
