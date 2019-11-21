@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 
 
+#Find teacher id
 def findTeacher(aTeacher):
     url = "https://www.ratemyprofessors.com/search.jsp?query="
 
@@ -11,6 +12,7 @@ def findTeacher(aTeacher):
 
     soup = BeautifulSoup(sauce.text, "html.parser")
 
+    #Find the teacher id if the teacher searched is from BU
     link = None
     for li in soup.find_all('li',class_= 'listing PROFESSOR'):
         for uni in li.find('span',class_='sub'):
@@ -23,6 +25,7 @@ def findTeacher(aTeacher):
 # a = findTeacher("Dora Erdos")
 # print(a)
 
+#Use the teacher id found to find teacher Rating
 def findRating(aLink):
     base_url = 'https://www.ratemyprofessors.com'
 
