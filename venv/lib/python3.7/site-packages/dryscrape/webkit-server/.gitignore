@@ -1,0 +1,13 @@
+*~
+*.o
+*.moc
+*.pyc
+moc_*.cpp
+Makefile*
+qrc_*.cpp
+/src/webkit_server
+/webkit_server
+/MANIFEST
+/dist
+/build
+/src/build

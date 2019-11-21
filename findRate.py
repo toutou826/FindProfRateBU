@@ -1,33 +1,41 @@
 import requests
 from bs4 import BeautifulSoup
 
-url = "https://www.ratemyprofessors.com/search.jsp"
-def findRating(aTeacher):
-    url = "https://www.ratemyprofessors.com/search.jsp"
 
-    querystring = {"query":"+".join(aTeacher.split(" "))}
+def findTeacher(aTeacher):
+    url = "https://www.ratemyprofessors.com/search.jsp?query="
 
-    headers = {
-        'User-Agent': "PostmanRuntime/7.19.0",
-        'Accept': "*/*",
-        'Cache-Control': "no-cache",
-        'Postman-Token': "ab527ab8-1999-4667-83d3-1593fb0e360c,b2ba91a5-a537-427d-858d-3069c0754977",
-        'Host': "www.ratemyprofessors.com",
-        'Accept-Encoding': "gzip, deflate",
-        'Connection': "keep-alive",
-        'cache-control': "no-cache"
-        }
+    name = '+'.join(aTeacher.lower().split(' '))
 
-    response = requests.request("GET", url, headers=headers, params=querystring)
+    sauce = requests.get(url+name)
 
-    soup = BeautifulSoup(response.text, "html.parser")
-    print(soup.prettify())
+    soup = BeautifulSoup(sauce.text, "html.parser")
+
     link = None
     for li in soup.find_all('li',class_= 'listing PROFESSOR'):
         for uni in li.find('span',class_='sub'):
             if uni.split(',')[0] == "Boston University":
-                link = li.find('a')
+                link = li.find('a').get('href')
                 break
     return link
 
 
+# a = findTeacher("Dora Erdos")
+# print(a)
+
+def findRating(aLink):
+    base_url = 'https://www.ratemyprofessors.com'
+
+    print(base_url+aLink)
+
+    sauce = requests.get(base_url+aLink)
+
+    soup = BeautifulSoup(sauce.text, "html.parser")
+
+    grades = soup.find_all('div', class_='grade')
+
+    result = f'Quality: {grades[0].get_text().strip()}\nWould Take Again: {grades[1].get_text().strip()}\nDifficulty: {grades[2].get_text().strip()}'
+
+    return result
+
+# findRating(findTeacher("Dora Erdos"))

@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import collections
+import lxml
 
 url = "http://www.bu.edu/phpbin/course-search/section/"
 #Input name of the class, find and return section,teacher and time from catalog.
@@ -9,9 +10,9 @@ def getClass(name):
     Section = collections.namedtuple('Section',['sectionName','teacher','time'])
     #Get response from the name of the class
     querystring = {"t": name}
-    response = requests.request("GET", url, params=querystring)
+    sauce = requests.request("GET", url, params=querystring)
 
-    soup = BeautifulSoup(response.text, "html.parser")
+    soup = BeautifulSoup(sauce.text, "html.parser")
     classList = soup.find_all("td")
     divided = divide(classList, 8)
     #Append section, teacher and time to result
@@ -29,4 +30,3 @@ def divide(arr, n):
 
 
 
-# print(getClass("cascs330"))
