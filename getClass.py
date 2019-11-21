@@ -1,7 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
 import collections
-import lxml
 
 url = "http://www.bu.edu/phpbin/course-search/section/"
 #Input name of the class, find and return section,teacher and time from catalog.

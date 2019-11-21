@@ -26,8 +26,6 @@ def findTeacher(aTeacher):
 def findRating(aLink):
     base_url = 'https://www.ratemyprofessors.com'
 
-    print(base_url+aLink)
-
     sauce = requests.get(base_url+aLink)
 
     soup = BeautifulSoup(sauce.text, "html.parser")
