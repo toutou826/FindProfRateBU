@@ -32,7 +32,7 @@ def findRating(aLink):
 
     grades = soup.find_all('div', class_='grade')
 
-    result = f'Quality: {grades[0].get_text().strip()}\nWould Take Again: {grades[1].get_text().strip()}\nDifficulty: {grades[2].get_text().strip()}'
+    result = f'Quality: {grades[0].get_text().strip()}\nWould Take Again: {grades[1].get_text().strip()}\nDifficulty: {grades[2].get_text().strip()}\n'
 
     return result
 

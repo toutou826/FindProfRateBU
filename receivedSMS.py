@@ -18,14 +18,15 @@ def incoming_sms():
     teacherSet = set()
     for section in result:
         teacherSet.add(section.teacher)
-        sectionsOutput += f"Section Name: {section.sectionName}, Teacher Name: {section.teacher}, Time: {section.time} \n"
+        sectionsOutput += f'Section Name: {section.sectionName}, Teacher Name: {section.teacher}, Time: {section.time} \n'
     
-    RatingsOutput = f'These are the ratings for these professors I can find on RMP:\n'
-    teachers = [findTeacher(i) for i in teacherSet] 
+    RatingsOutput = 'These are the ratings for these professors I can find on RMP:\n'
 
-    for teacher in teachers:
-        if teacher != None:
-            RatingsOutput += findRating(teacher)
+
+    for teacher in teacherSet:
+        Teacherid = findTeacher(teacher) 
+        if Teacherid != None:
+            RatingsOutput += f'Teacher: {teacher}:\n{findRating(Teacherid)}'
 
     print(sectionsOutput)
     resp.message(sectionsOutput)
@@ -33,4 +34,4 @@ def incoming_sms():
     print(RatingsOutput)
     resp.message(RatingsOutput)
 
-    return "Running Right Now!"
+    return str(resp)
